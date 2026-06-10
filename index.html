@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Project Proposal — Bag Brand</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:      #0D1117;
+    --ink-mid:  #3A4A5C;
+    --ink-soft: #6B7A8D;
+    --gold:     #C8963A;
+    --gold-lt:  #F7EDD8;
+    --gold-mid: #E8B96A;
+    --cream:    #FAFAF7;
+    --white:    #FFFFFF;
+    --rule:     #E2E6EA;
+    --chip-bg:  #EFF3F6;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,17,23,0.96);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 60px;
+    border-bottom: 1px solid rgba(200,150,58,0.2);
+  }
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--gold); letter-spacing: 2px;
+  }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.5);
+    text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--ink);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 80px 80px 72px;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,150,58,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,150,58,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .hero-glow {
+    position: absolute; top: -20%; right: -10%;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,150,58,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--gold); letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-tag::before {
+    content: ''; display: block;
+    width: 32px; height: 1px; background: var(--gold);
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 900; line-height: 0.95;
+    color: var(--white); margin-bottom: 32px;
+  }
+  .hero-title span { color: var(--gold); }
+  .hero-meta {
+    display: flex; gap: 48px; align-items: flex-end;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 32px; margin-top: 8px;
+  }
+  .hero-meta-item label {
+    display: block; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: rgba(255,255,255,0.3);
+    margin-bottom: 4px;
+  }
+  .hero-meta-item p {
+    font-size: 15px; font-weight: 600; color: var(--white);
+  }
+  .hero-scroll {
+    margin-left: auto; align-self: flex-end;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: rgba(255,255,255,0.25);
+    letter-spacing: 2px; writing-mode: vertical-rl;
+  }
+
+  /* ── SECTIONS ── */
+  .section { padding: 96px 80px; }
+  .section:nth-child(even) { background: var(--white); }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-eyebrow::after {
+    content: ''; flex: 1; max-width: 48px;
+    height: 1px; background: var(--gold); opacity: 0.4;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 42px); font-weight: 700;
+    color: var(--ink); margin-bottom: 48px; line-height: 1.2;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    align-items: start;
+  }
+  .about-body {
+    font-size: 16px; color: var(--ink-mid); line-height: 1.8;
+  }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  }
+  .stat-card {
+    background: var(--ink); padding: 32px 28px;
+    position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%; background: var(--gold);
+  }
+  .stat-card:first-child { grid-column: 1 / -1; background: var(--gold); }
+  .stat-card:first-child .stat-num { color: var(--ink); }
+  .stat-card:first-child .stat-label { color: rgba(13,17,23,0.7); }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 900; color: var(--white);
+    line-height: 1; margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); font-weight: 500;
+  }
+
+  /* ── PHASES ── */
+  .phases { display: flex; flex-direction: column; gap: 2px; }
+  .phase-card {
+    border: 1px solid var(--rule);
+    background: var(--white);
+    transition: border-color 0.2s;
+  }
+  .phase-card:hover { border-color: var(--gold); }
+  .phase-header {
+    display: flex; align-items: center; gap: 20px;
+    padding: 28px 32px; cursor: pointer;
+  }
+  .phase-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600; color: var(--gold);
+    background: var(--gold-lt); padding: 4px 10px; border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .phase-name {
+    font-size: 16px; font-weight: 600; color: var(--ink); flex: 1;
+  }
+  .phase-badge {
+    font-size: 11px; font-weight: 500; color: var(--ink-soft);
+    background: var(--chip-bg); padding: 4px 12px; border-radius: 20px;
+  }
+  .phase-body { padding: 0 32px 28px 80px; }
+  .phase-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .phase-list li {
+    font-size: 14px; color: var(--ink-mid); padding-left: 20px; position: relative;
+  }
+  .phase-list li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--gold); font-size: 12px;
+  }
+  .phase-note {
+    margin-top: 16px; padding: 12px 16px;
+    background: var(--gold-lt); border-left: 3px solid var(--gold);
+    font-size: 12px; color: var(--ink-mid); line-height: 1.6;
+  }
+
+  /* ── ROADMAP ── */
+  .roadmap { position: relative; }
+  .roadmap-track {
+    position: absolute; left: 100px; top: 24px; bottom: 24px;
+    width: 1px; background: var(--rule);
+  }
+  .roadmap-item {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 32px; align-items: start; padding: 32px 0;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  .roadmap-item:last-child { border-bottom: none; }
+  .roadmap-item::before {
+    content: ''; position: absolute;
+    left: 96px; top: 40px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--gold); border: 2px solid var(--cream);
+    box-shadow: 0 0 0 3px var(--gold-lt);
+  }
+  .roadmap-label {
+    padding-top: 4px; text-align: right; padding-right: 48px;
+  }
+  .roadmap-month {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700; color: var(--ink);
+    display: block; margin-bottom: 4px;
+  }
+  .roadmap-focus {
+    font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .roadmap-content h4 {
+    font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 12px;
+  }
+  .roadmap-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-size: 12px; padding: 5px 12px; border-radius: 4px;
+    background: var(--chip-bg); color: var(--ink-mid); font-weight: 500;
+  }
+  .tag.gold { background: var(--gold-lt); color: var(--gold); }
+
+  /* ── BUDGET ── */
+  .budget-hero {
+    background: var(--ink); border-radius: 4px;
+    padding: 48px; margin-bottom: 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .budget-hero::after {
+    content: ''; position: absolute; right: -40px; top: -40px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,150,58,0.15), transparent 70%);
+  }
+  .budget-hero-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.4);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .budget-total {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px; font-weight: 900; color: var(--white); line-height: 1;
+  }
+  .budget-total span { color: var(--gold); font-size: 36px; vertical-align: super; }
+  .budget-hero-right {
+    text-align: right;
+  }
+  .budget-hero-right p {
+    font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 4px;
+  }
+  .budget-hero-right strong {
+    font-size: 18px; color: var(--gold); display: block;
+  }
+  .budget-breakdown {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    margin-bottom: 32px;
+  }
+  .budget-month {
+    background: var(--white); border: 1px solid var(--rule);
+    padding: 28px; position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .budget-month:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .bm-month {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 2px; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .bm-scope {
+    font-size: 13px; color: var(--ink-mid); line-height: 1.6; margin-bottom: 16px;
+    flex: 1;
+  }
+  .bm-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 700; color: var(--ink);
+    border-top: 1px solid var(--rule); padding-top: 16px;
+  }
+
+  /* ── PAYMENT ── */
+  .payment-track { position: relative; padding-left: 32px; }
+  .payment-track::before {
+    content: ''; position: absolute; left: 8px; top: 12px; bottom: 12px;
+    width: 1px; background: var(--rule);
+  }
+  .payment-step {
+    position: relative; padding: 0 0 40px 40px;
+  }
+  .payment-step:last-child { padding-bottom: 0; }
+  .payment-step::before {
+    content: ''; position: absolute; left: -24px; top: 4px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--gold-lt); border: 2px solid var(--gold);
+  }
+  .ps-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--ink-soft); margin-bottom: 4px;
+  }
+  .ps-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 700; color: var(--ink); margin-bottom: 4px;
+  }
+  .ps-when {
+    font-size: 13px; color: var(--ink-mid);
+  }
+  .exclusions {
+    margin-top: 48px; padding: 24px 28px;
+    border: 1px solid var(--rule); background: var(--chip-bg);
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .excl-icon {
+    font-size: 20px; flex-shrink: 0;
+  }
+  .excl-title {
+    font-size: 12px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--ink); margin-bottom: 6px;
+  }
+  .excl-body { font-size: 13px; color: var(--ink-mid); line-height: 1.6; }
+
+  /* ── EXPECTATIONS ── */
+  .expect-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  }
+  .expect-card {
+    padding: 36px; background: var(--white); border: 1px solid var(--rule);
+    position: relative;
+  }
+  .expect-card::before {
+    content: attr(data-month);
+    position: absolute; top: 24px; right: 24px;
+    font-family: 'Playfair Display', serif;
+    font-size: 64px; font-weight: 900;
+    color: var(--rule); line-height: 1;
+  }
+  .expect-card h4 {
+    font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+  }
+  .expect-card p { font-size: 14px; color: var(--ink-mid); line-height: 1.7; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); padding: 64px 80px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(200,150,58,0.2);
+  }
+  .footer-left h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; color: var(--white); margin-bottom: 6px;
+  }
+  .footer-left p { font-size: 13px; color: rgba(255,255,255,0.35); }
+  .footer-right {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--gold); letter-spacing: 2px;
+    text-align: right; line-height: 2;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    nav { display: none; }
+    .hero { min-height: auto; padding: 48px; }
+    .section { padding: 48px; }
+    .budget-month:hover { transform: none; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 80px 24px 48px; }
+    .hero-meta { flex-wrap: wrap; gap: 24px; }
+    .section { padding: 64px 24px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .roadmap-item { grid-template-columns: 1fr; }
+    .roadmap-label { text-align: left; padding-right: 0; padding-left: 48px; }
+    .roadmap-track { left: 16px; }
+    .roadmap-item::before { left: 12px; }
+    .budget-hero { flex-direction: column; gap: 24px; }
+    .budget-hero-right { text-align: left; }
+    .budget-breakdown { grid-template-columns: 1fr; }
+    .expect-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 32px; }
+    .footer-right { text-align: left; }
+  }
+
+  /* scroll fade-in */
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">D&P / PROPOSAL</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#budget">Budget</a>
+    <a href="#expectations">Expectations</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-tag">Project Proposal — 2026</div>
+  <h1 class="hero-title">
+    Digital<br/>
+    <span>Marketing</span><br/>
+    Proposal
+  </h1>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <label>Prepared for</label>
+      <p>Bag Brand Client, Chennai</p>
+    </div>
+    <div class="hero-meta-item">
+      <label>Prepared by</label>
+      <p>Divya &amp; Punam</p>
+    </div>
+    <div class="hero-meta-item">
+      <label>Engagement</label>
+      <p>3-Month Plan A</p>
+    </div>
+    <div class="hero-meta-item">
+      <label>Date</label>
+      <p>June 2026</p>
+    </div>
+    <div class="hero-scroll">SCROLL TO EXPLORE</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-eyebrow">Who we are</div>
+  <h2 class="section-title">A team built for brands<br/>starting from zero.</h2>
+  <div class="about-grid fade-in">
+    <div>
+      <p class="about-body">
+        We are a 2-member digital marketing team — Divya &amp; Punam — specialising in building brands online from scratch. We handle everything end-to-end: strategy, content writing, shooting, editing, posting, and management.<br/><br/>
+        In case of additional shoot requirements, we bring in a freelance shoot specialist on a need basis — only when required. No bloated team. No unnecessary overhead. Just focused, high-quality work.
+      </p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">3-Month</div>
+        <div class="stat-label">Focused Engagement</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3×</div>
+        <div class="stat-label">Posts per Week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">End&#8209;to&#8209;End</div>
+        <div class="stat-label">Full Management</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-eyebrow">What we deliver</div>
+  <h2 class="section-title">Three phases.<br/>One complete strategy.</h2>
+  <div class="phases fade-in">
+
+    <div class="phase-card">
+      <div class="phase-header">
+        <span class="phase-num">PHASE 01</span>
+        <span class="phase-name">Content &amp; Instagram Management</span>
+        <span class="phase-badge">Month 1 onwards</span>
+      </div>
+      <div class="phase-body">
+        <ul class="phase-list">
+          <li>Content strategy and planning</li>
+          <li>Content writing, shooting, and editing</li>
+          <li>3 posts per week — reels, carousels, static posts</li>
+          <li>Weekly visit to location for content shoot (twice if needed)</li>
+          <li>Posting and account management</li>
+          <li>Competitor research and market analysis</li>
+          <li>Monthly content calendar</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-header">
+        <span class="phase-num">PHASE 02</span>
+        <span class="phase-name">Amazon Setup &amp; Management</span>
+        <span class="phase-badge">Month 2 onwards</span>
+      </div>
+      <div class="phase-body">
+        <ul class="phase-list">
+          <li>Amazon seller account setup</li>
+          <li>Product listing creation with descriptions and photos</li>
+          <li>Ongoing Amazon account management</li>
+        </ul>
+        <div class="phase-note">All Amazon ad spend and platform fees are paid directly by the client — not included in our fees.</div>
+      </div>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-header">
+        <span class="phase-num">PHASE 03</span>
+        <span class="phase-name">Meta Ads Management</span>
+        <span class="phase-badge">Month 3</span>
+      </div>
+      <div class="phase-body">
+        <ul class="phase-list">
+          <li>Ad strategy and creatives</li>
+          <li>Campaign setup, monitoring, and optimisation</li>
+          <li>Performance reporting</li>
+        </ul>
+        <div class="phase-note">All Meta ad spend budget is paid directly by the client — not included in our fees.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section" id="roadmap">
+  <div class="section-eyebrow">The plan</div>
+  <h2 class="section-title">3-Month content roadmap.</h2>
+  <div class="roadmap fade-in">
+    <div class="roadmap-track"></div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-label">
+        <span class="roadmap-month">Month 1</span>
+        <span class="roadmap-focus">Brand Identity</span>
+      </div>
+      <div class="roadmap-content">
+        <h4>Establishing who you are before you sell anything.</h4>
+        <div class="roadmap-tags">
+          <span class="tag">Company intro (3–4 posts)</span>
+          <span class="tag">Product showcase</span>
+          <span class="tag gold">Legacy story — 40+ years</span>
+          <span class="tag">Milestones &amp; achievements</span>
+          <span class="tag">80,000 schoolbags milestone</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-label">
+        <span class="roadmap-month">Month 2</span>
+        <span class="roadmap-focus">Trust &amp; Engagement</span>
+      </div>
+      <div class="roadmap-content">
+        <h4>Building an audience that actually cares.</h4>
+        <div class="roadmap-tags">
+          <span class="tag">Trending reels</span>
+          <span class="tag">Interactive content</span>
+          <span class="tag gold">Amazon setup begins</span>
+          <span class="tag">Brand goals &amp; upcoming plans</span>
+          <span class="tag">Customisation offering content</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-label">
+        <span class="roadmap-month">Month 3</span>
+        <span class="roadmap-focus">Growth &amp; Monetisation</span>
+      </div>
+      <div class="roadmap-content">
+        <h4>Converting reach into real revenue.</h4>
+        <div class="roadmap-tags">
+          <span class="tag gold">Meta ads launch</span>
+          <span class="tag">Influencer collabs</span>
+          <span class="tag gold">Amazon retail live</span>
+          <span class="tag">Corporate gifting push</span>
+          <span class="tag">Wedding customisation</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p style="margin-top:32px; font-size:13px; color:var(--ink-soft);">
+    ↗ Throughout all 3 months: trending content, audience engagement, and content calendar run simultaneously.
+  </p>
+</section>
+
+<!-- BUDGET -->
+<section class="section" id="budget">
+  <div class="section-eyebrow">Investment</div>
+  <h2 class="section-title">Transparent pricing.<br/>No surprises.</h2>
+
+  <div class="budget-hero fade-in">
+    <div class="budget-hero-left">
+      <h2>3-Month Package</h2>
+      <div class="budget-total"><span>₹</span>1,00,000</div>
+    </div>
+    <div class="budget-hero-right">
+      <p>Standard price</p>
+      <strong>₹1,20,000</strong>
+      <p style="margin-top:12px;">You save</p>
+      <strong>₹20,000</strong>
+    </div>
+  </div>
+
+  <div class="budget-breakdown fade-in">
+    <div class="budget-month">
+      <div class="bm-month">Month 01</div>
+      <div class="bm-scope">Instagram Management<br/>Content strategy, writing, shooting, editing &amp; posting — 3 posts/week</div>
+      <div class="bm-amount">₹25,000</div>
+    </div>
+    <div class="budget-month">
+      <div class="bm-month">Month 02</div>
+      <div class="bm-scope">Instagram Management<br/>+ Amazon Setup &amp; Management</div>
+      <div class="bm-amount">₹35,000</div>
+    </div>
+    <div class="budget-month">
+      <div class="bm-month">Month 03</div>
+      <div class="bm-scope">Instagram Management<br/>+ Amazon Management<br/>+ Meta Ads Management</div>
+      <div class="bm-amount">₹40,000</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; font-size:22px; margin-bottom:32px;">Payment Schedule</h3>
+  <div class="payment-track fade-in">
+    <div class="payment-step">
+      <div class="ps-label">1st Payment — Advance</div>
+      <div class="ps-amount">₹30,000</div>
+      <div class="ps-when">Due before the project begins</div>
+    </div>
+    <div class="payment-step">
+      <div class="ps-label">2nd Payment</div>
+      <div class="ps-amount">₹30,000</div>
+      <div class="ps-when">Due mid of Month 2</div>
+    </div>
+    <div class="payment-step">
+      <div class="ps-label">3rd &amp; Final Payment</div>
+      <div class="ps-amount">₹40,000</div>
+      <div class="ps-when">Due after completion of Month 3</div>
+    </div>
+  </div>
+
+  <div class="exclusions fade-in">
+    <div class="excl-icon">⚡</div>
+    <div>
+      <div class="excl-title">Not included in our fees — paid directly by client</div>
+      <div class="excl-body">Meta Ads spend budget &nbsp;·&nbsp; Amazon Ads &amp; platform fees &nbsp;·&nbsp; Any additional production costs outside the agreed scope</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPECTATIONS -->
+<section class="section" id="expectations">
+  <div class="section-eyebrow">What to expect</div>
+  <h2 class="section-title">Social media is a process,<br/>not an overnight result.</h2>
+  <div class="expect-grid fade-in">
+    <div class="expect-card" data-month="1">
+      <h4>Month 1 — Awareness</h4>
+      <p>We focus purely on building awareness. Views and interactions matter more than follower count at this stage. The goal is to make people stop and notice.</p>
+    </div>
+    <div class="expect-card" data-month="2">
+      <h4>Month 2 — Audience</h4>
+      <p>We focus on growing a real, engaged audience. Followers who care about the brand, not just numbers on a screen. Amazon goes live in parallel.</p>
+    </div>
+    <div class="expect-card" data-month="3">
+      <h4>Month 3 — Revenue</h4>
+      <p>We start driving actual customer enquiries and revenue. Ads amplify what's already working organically. Performance data shared every month — full transparency.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <h3>Let's build something great.</h3>
+    <p>Divya &amp; Punam · Chennai · June 2026</p>
+  </div>
+  <div class="footer-right">
+    PLAN A · 3 MONTHS<br/>
+    ₹1,00,000 PACKAGE<br/>
+    INSTAGRAM · AMAZON · META ADS
+  </div>
+</footer>
+
+<script>
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

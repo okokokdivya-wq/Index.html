@@ -1,0 +1,20 @@
+# Jekyll configuration for GitHub Pages
+
+title: Digital Marketing Proposal — Bag Brand
+description: A professional 3-month digital marketing proposal for a Bag Brand client
+url: "https://okokokdivya-wq.github.io/marketing-proposal"
+baseurl: "/marketing-proposal"
+
+# Theme
+theme: null
+
+# Markdown
+markdown: kramdown
+
+# Plugins
+plugins: []
+
+# Exclude files from processing
+exclude:
+  - .gitignore
+  - README.md
