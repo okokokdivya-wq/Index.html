@@ -4,7 +4,7 @@ A GitHub Pages-ready professional proposal website for a 3-month digital marketi
 
 ## 📋 Overview
 
-This is a modern, responsive proposal webpage designed by **Divya & Punam** for a Bag Brand client in Chennai. The site showcases a complete 3-month digital marketing engagement including:
+This is a modern, responsive proposal webpage designed by **Divya & Punam** for a Baggbee client in Chennai. The site showcases a complete 3-month digital marketing engagement including:
 
 - **Phase 1:** Content & Instagram Management
 - **Phase 2:** Amazon Setup & Management
