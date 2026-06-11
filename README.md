@@ -1,4 +1,4 @@
-# Digital Marketing Proposal — Bag Brand
+# Digital Marketing Proposal — Baggbee
 
 A GitHub Pages-ready professional proposal website for a 3-month digital marketing engagement.
 
